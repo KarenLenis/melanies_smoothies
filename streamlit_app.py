@@ -29,16 +29,17 @@ ingredients_list= st.multiselect(
 if ingredients_list:
     ingredients_string=''
     for fruit_choosen in ingredients_list:
-        ingredients_string+= fruit_choosen+' '
+      ingredients_string+= fruit_choosen+' '
     #st.write(ingredients_string)
 #Build a SQL Insert Statement & Test It
-    my_insert_stmt="""insert into smoothies.public.orders(ingredients,name_on_order)
+      my_insert_stmt="""insert into smoothies.public.orders(ingredients,name_on_order)
                 values('"""+ ingredients_string+"""','"""+ name_on_order+"""')"""
     #st.write(my_insert_stmt)
     #st.stop()
-    time_to_insert=st.button('Submit Order')
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.text(smoothiefroot_response)
+      time_to_insert=st.button('Submit Order')
+      
+      smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+      st.text(smoothiefroot_response.json())
 #Insert the Order into Snowflake
     if time_to_insert:
         session.sql(my_insert_stmt).collect()
